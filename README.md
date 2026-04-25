@@ -13,7 +13,7 @@ The core pipeline is defined in `.pipe/benchmark.pipe` and executed by the Rocke
 - **Source**: `dropper` (local, file-based input)
 - **Parse**: `parse` (extract text from uploaded `.txt`)
 - **Question**: `question` (convert text → `questions` lane)
-- **Fan-out**: `llm_openai`, `llm_anthropic`, `llm_gemini` in parallel
+- **Fan-out**: `llm_gemini` (Gemini Flash) for a local, no-paid-credits run
 - **Aggregate/Return**: single `response_answers` node that merges all provider outputs into one result
 
 ## Screenshot
@@ -47,8 +47,6 @@ pip install -r requirements.txt
 Copy `.env.example` to `.env` and fill in:
 
 - `ROCKETRIDE_URI` (default: `ws://localhost:5565`)
-- `ROCKETRIDE_OPENAI_KEY`
-- `ROCKETRIDE_ANTHROPIC_KEY`
 - `ROCKETRIDE_GEMINI_KEY`
 
 Do **not** commit `.env`.
@@ -72,8 +70,6 @@ Your output will look like:
 
 | Prompt | Provider | Latency (ms) | Prompt tok | Comp tok | Total tok |
 | --- | --- | ---:| ---:| ---:| ---:|
-| reasoning | llm_openai | 512 | 33 | 24 | 57 |
-| reasoning | llm_anthropic | 690 | 33 | 27 | 60 |
 | reasoning | llm_gemini | 410 | 33 | 22 | 55 |
 
 ## How it uses RocketRide

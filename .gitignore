@@ -1,5 +1,6 @@
 .venv/
 __pycache__/
 .tmp_inputs/
+.tmp_llm_*.json
 .env
 results/benchmark_results.json

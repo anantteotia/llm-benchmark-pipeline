@@ -166,8 +166,8 @@ async def run_one_prompt(*, client: Any, token: str, prompt_id: str, prompt: str
 			)
 		]
 
-	# deterministic mapping: we know we asked for 3 providers in a fixed order
-	provider_order = ["llm_openai", "llm_anthropic", "llm_gemini"]
+	# deterministic mapping: providers in pipeline fan-out order
+	provider_order = ["llm_gemini"]
 
 	out: list[ProviderResult] = []
 	for idx, answer in enumerate(answers):
@@ -208,17 +208,9 @@ async def main() -> None:
 	if not cfg.uri:
 		raise RuntimeError("Missing ROCKETRIDE_URI (e.g. ws://localhost:5565)")
 
-	# Avoid printing secrets, but fail fast if they're missing
-	missing = []
-	for env_name, value in (
-		("ROCKETRIDE_OPENAI_KEY", cfg.openai_key),
-		("ROCKETRIDE_ANTHROPIC_KEY", cfg.anthropic_key),
-		("ROCKETRIDE_GEMINI_KEY", cfg.gemini_key),
-	):
-		if not value:
-			missing.append(env_name)
-	if missing:
-		raise RuntimeError(f"Missing required env vars in `.env`: {', '.join(missing)}")
+	# Avoid printing secrets, but fail fast if the required provider key is missing
+	if not cfg.gemini_key:
+		raise RuntimeError("Missing required env var in `.env`: ROCKETRIDE_GEMINI_KEY")
 
 	prompts = json.loads(PROMPTS_PATH.read_text(encoding="utf-8"))
 	if not isinstance(prompts, list) or not prompts:
