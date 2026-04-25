@@ -1,0 +1,71 @@
+{
+	"components": [
+		{
+			"id": "dropper_1",
+			"provider": "dropper",
+			"config": { "hideForm": true, "mode": "Source", "parameters": {}, "type": "dropper" },
+			"ui": { "position": { "x": 20, "y": 240 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "parse_1",
+			"provider": "parse",
+			"config": {},
+			"input": [{ "lane": "tags", "from": "dropper_1" }],
+			"ui": { "position": { "x": 240, "y": 240 }, "measured": { "width": 150, "height": 136 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "question_1",
+			"provider": "question",
+			"config": { "profile": "default", "parameters": {} },
+			"input": [{ "lane": "text", "from": "parse_1" }],
+			"ui": { "position": { "x": 460, "y": 240 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_openai_1",
+			"provider": "llm_openai",
+			"config": {
+				"profile": "openai-4o",
+				"openai-4o": { "apikey": "${ROCKETRIDE_OPENAI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "question_1" }],
+			"ui": { "position": { "x": 680, "y": 120 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_anthropic_1",
+			"provider": "llm_anthropic",
+			"config": {
+				"profile": "claude",
+				"claude": { "apikey": "${ROCKETRIDE_ANTHROPIC_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "question_1" }],
+			"ui": { "position": { "x": 680, "y": 240 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_gemini_1",
+			"provider": "llm_gemini",
+			"config": {
+				"profile": "gemini",
+				"gemini": { "apikey": "${ROCKETRIDE_GEMINI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "question_1" }],
+			"ui": { "position": { "x": 680, "y": 360 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "response_answers_1",
+			"provider": "response_answers",
+			"config": { "laneName": "answers" },
+			"input": [
+				{ "lane": "answers", "from": "llm_openai_1" },
+				{ "lane": "answers", "from": "llm_anthropic_1" },
+				{ "lane": "answers", "from": "llm_gemini_1" }
+			],
+			"ui": { "position": { "x": 900, "y": 240 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		}
+	],
+	"project_id": "c8ea283e-1e01-4e41-aaac-1cf9f80b03d2",
+	"viewport": { "x": 0, "y": 0, "zoom": 1 },
+	"version": 1
+}

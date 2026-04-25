@@ -1,0 +1,26 @@
+[
+	{
+		"id": "factual_recall",
+		"prompt": "What is the capital of France?"
+	},
+	{
+		"id": "reasoning",
+		"prompt": "If a train travels at 60 mph for 2.5 hours, how far does it travel?"
+	},
+	{
+		"id": "code_generation",
+		"prompt": "Write a Python function that checks if a string is a palindrome."
+	},
+	{
+		"id": "summarization",
+		"prompt": "Summarize the following paragraph in 2 bullet points:\\n\\nRocketRide is an open-source AI pipeline engine with a high-performance C++ core and a VS Code-native visual builder. Pipelines are defined as portable .pipe JSON files, executed by a multithreaded runtime, and can integrate LLM providers, vector databases, OCR, and agent orchestration. It supports building, debugging, and scaling AI workflows directly from an IDE."
+	},
+	{
+		"id": "creative",
+		"prompt": "Write a one-sentence product tagline for an on-device AI inference tool."
+	},
+	{
+		"id": "structured_output",
+		"prompt": "Return a JSON object with keys {\"pros\": [...], \"cons\": [...]} listing 3 pros and 3 cons of using vendor benchmarks to choose an LLM provider."
+	}
+]
